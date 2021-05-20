@@ -1,4 +1,8 @@
 {
+    "config":{
+        "page_id": "0yx2kn4zvnf9",
+        "http_timeout_ms": 500
+    },
     "tasks":{
         "dns":[
             {
