@@ -9,7 +9,7 @@
                 "component_id": "ywxssldp6l08",
                 "server": {
                     "host": "dns.retrylife.ca",
-                    "port": "53"
+                    "port": 53
                 }
             }
         ],
@@ -18,8 +18,7 @@
                 "component_id": "78zd3j8bdndq",
                 "secure": true,
                 "server": {
-                    "host": "s2.retrylife.ca",
-                    "port": "443"
+                    "host": "s2.retrylife.ca"
                 }
             },
             {
