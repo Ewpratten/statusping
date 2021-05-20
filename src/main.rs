@@ -89,6 +89,9 @@ fn main() {
     let oauth = oauth.strip_suffix("\n").unwrap_or(&oauth).to_string();
     println!("Loaded oauth");
 
+    // Ensure the user is root (raw sockets cannot be opened by regular users)
+    let _ = sudo::escalate_if_needed().unwrap();
+
     // Set up progress bar
     let pb = ProgressBar::new(
         (config.tasks.dns.len()
@@ -131,7 +134,18 @@ fn main() {
     }
 
     // Perform ping checks
-    // TODO
+    for ping_task in config.tasks.ping.iter() {
+        let result = tasks::ping::check_host_ping(ping_task);
+        set_component_status(
+            &pb,
+            dry_run,
+            &oauth,
+            &config.config.page_id,
+            &ping_task.component_id,
+            &result,
+        );
+        pb.inc(1);
+    }
 
     // Perform statuspage checks
     // TODO
