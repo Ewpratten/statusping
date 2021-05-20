@@ -1,0 +1,109 @@
+{
+    "tasks":{
+        "dns":[
+            {
+                "component_id": "ywxssldp6l08",
+                "server": {
+                    "host": "dns.retrylife.ca",
+                    "port": "53"
+                }
+            }
+        ],
+        "http": [
+            {
+                "component_id": "78zd3j8bdndq",
+                "secure": true,
+                "server": {
+                    "host": "s2.retrylife.ca",
+                    "port": "443"
+                }
+            },
+            {
+                "component_id": "8xv6tbm4l2gc",
+                "secure": true,
+                "server": {
+                    "host": "retrylife.ca"
+                }
+            },
+            {
+                "component_id": "b90jrxvwz0gh",
+                "secure": true,
+                "server": {
+                    "host": "cs.5024.ca"
+                }
+            },
+            {
+                "component_id": "lc9qhgvjwkz3",
+                "secure": true,
+                "server": {
+                    "host": "frc5024.github.io"
+                }
+            },
+            {
+                "component_id": "1kkhbl3gy6j8",
+                "secure": true,
+                "subpath": "/pihole/",
+                "expect_code": 401,
+                "server": {
+                    "host": "s2.retrylife.ca"
+                }
+            },
+            {
+                "component_id": "96vd4gjhqvly",
+                "secure": true,
+                "server": {
+                    "host": "release.maven.retrylife.ca"
+                }
+            },
+            {
+                "component_id": "qtx8dkzsqjj6",
+                "secure": true,
+                "server": {
+                    "host": "snapshot.maven.retrylife.ca"
+                }
+            },
+            {
+                "component_id": "f4jn5br12xl2",
+                "secure": true,
+                "server": {
+                    "host": "files.retrylife.ca"
+                }
+            },
+            {
+                "component_id": "hrfltc556m2z",
+                "secure": true,
+                "server": {
+                    "host": "ewpratten.keybase.pub"
+                }
+            }
+        ],
+        "ping": [
+            {
+                "component_id": "p3yvnf4thmmf",
+                "server": {
+                    "host": "aprs.local"
+                }
+            },
+            {
+                "component_id": "ywwvrxjy3psb",
+                "server": {
+                    "host": "homebase.local"
+                }
+            },
+            {
+                "component_id": "0kw1hgqrqhm6",
+                "server": {
+                    "host": "s2.retrylife.ca"
+                }
+            }
+        ],
+        "statuspage": [
+            {
+                "component_id": "239x2cdzrzf6",
+                "server": {
+                    "host": "www.vercel-status.com"
+                }
+            }
+        ]
+    }
+}
