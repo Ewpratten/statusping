@@ -7,7 +7,7 @@ use crate::config::tasks::HttpTask;
 use super::TaskResult;
 
 /// Perform an HTTP check on a host
-pub fn check_host_http(timeout_ms: u32, task: HttpTask) -> TaskResult {
+pub fn check_host_http(timeout_ms: u32, task: &HttpTask) -> TaskResult {
     // Build and configure an http client
     let client = ClientBuilder::new()
         .timeout(Some(Duration::from_millis(timeout_ms as u64)))
@@ -27,8 +27,8 @@ pub fn check_host_http(timeout_ms: u32, task: HttpTask) -> TaskResult {
                 Some(port) => format!(":{}", port),
                 None => "".to_string(),
             },
-            match task.subpath {
-                Some(path) => path,
+            match &task.subpath {
+                Some(path) => path.clone(),
                 None => "".to_string(),
             }
         ))

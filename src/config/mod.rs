@@ -13,10 +13,10 @@ pub struct ConfigHeader {
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct TaskList {
-    pub dns: DnsTask,
-    pub http: HttpTask,
-    pub ping: PingTask,
-    pub statuspage: StatusPageTask,
+    pub dns: Vec<DnsTask>,
+    pub http: Vec<HttpTask>,
+    pub ping: Vec<PingTask>,
+    pub statuspage: Vec<StatusPageTask>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
