@@ -8,10 +8,12 @@ use clap::{value_t, App, Arg};
 use config::Config;
 use indicatif::{ProgressBar, ProgressStyle};
 use tasks::TaskResult;
+use trust_dns_client::udp::UdpClientConnection;
 
 fn set_component_status(
     progress_bar: &ProgressBar,
     dry_run: bool,
+    api_key: &String,
     page_id: &String,
     component_id: &String,
     status: &TaskResult,
@@ -81,8 +83,20 @@ fn main() {
             .progress_chars("#>-"),
     );
 
+
     // Perform dns checks
-    // TODO
+    for dns_task in config.tasks.dns.iter() {
+        let result = tasks::dns::check_host_dns(dns_task);
+        set_component_status(
+            &pb,
+            dry_run,
+            &oauth,
+            &config.config.page_id,
+            &dns_task.component_id,
+            &result,
+        );
+        pb.inc(1);
+    }
 
     // Perform http checks
     for http_task in config.tasks.http.iter() {
@@ -90,6 +104,7 @@ fn main() {
         set_component_status(
             &pb,
             dry_run,
+            &oauth,
             &config.config.page_id,
             &http_task.component_id,
             &result,
