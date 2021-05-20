@@ -46,7 +46,7 @@
                 "component_id": "1kkhbl3gy6j8",
                 "secure": true,
                 "subpath": "/pihole/",
-                "expect_code": 401,
+                "expect_code": 200,
                 "server": {
                     "host": "s2.retrylife.ca"
                 }

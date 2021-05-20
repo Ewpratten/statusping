@@ -50,8 +50,9 @@ pub fn check_host_http(timeout_ms: u32, task: &HttpTask) -> TaskResult {
             Some(code) => code,
             None => 200,
         } as u16;
-
-        if response.unwrap().status().as_u16() == success_status {
+        let result_status = response.unwrap().status();
+        
+        if result_status.as_u16() == success_status {
             return TaskResult::Up;
         } else {
             return TaskResult::Down;

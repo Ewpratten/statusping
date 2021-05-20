@@ -1,12 +1,13 @@
 mod config;
 mod tasks;
 
-use std::{io::Read, thread, time::Duration};
+use std::{collections::HashMap, io::Read, thread, time::Duration};
 
 use autojson::structify;
 use clap::{value_t, App, Arg};
 use config::Config;
 use indicatif::{ProgressBar, ProgressStyle};
+use reqwest::{header::HeaderValue, Method};
 use tasks::TaskResult;
 use trust_dns_client::udp::UdpClientConnection;
 
@@ -26,10 +27,27 @@ fn set_component_status(
 
     // Only send data if real execution
     if !dry_run {
+
+        // Build form data
+        let mut form = HashMap::new();
+        form.insert("component[status]", match status {
+            TaskResult::Up => "operational",
+            TaskResult::Down => "major_outage",
+            TaskResult::Degraded => "degraded_performance"
+        });
+
         // Send data
+        let client = reqwest::blocking::Client::new();
+        let request = client.patch(format!(
+            "https://api.statuspage.io/v1/pages/{}/components/{}",
+            page_id, component_id
+        )).header("Authorization", HeaderValue::from_str(&format!("OAuth {}", api_key)).unwrap()).form(&form);
+        let response = request.send();
 
         // Sleep past the rate limit
         thread::sleep(Duration::from_secs(1));
+    }else{
+        progress_bar.println("--dry-run mode. Not sending data");
     }
 }
 
@@ -68,6 +86,7 @@ fn main() {
 
     // Load the oauth data
     let oauth = std::fs::read_to_string(oauth).unwrap();
+    let oauth = oauth.strip_suffix("\n").unwrap_or(&oauth).to_string();
     println!("Loaded oauth");
 
     // Set up progress bar
@@ -82,7 +101,6 @@ fn main() {
             .template("{spinner:.green} [{elapsed_precise}] [{wide_bar:.cyan/blue}] ({eta})")
             .progress_chars("#>-"),
     );
-
 
     // Perform dns checks
     for dns_task in config.tasks.dns.iter() {
